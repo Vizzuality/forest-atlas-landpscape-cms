@@ -247,17 +247,11 @@ class Site < ApplicationRecord
   private
 
   def generate_slug
-    write_attribute(:slug, self.name.parameterize == '' ? self.id : self.name.parameterize)
+    write_attribute(:slug, self.name&.parameterize == '' ? self.id : self.name&.parameterize)
   end
 
   def apply_settings
-    #compile_css
-
     system "rake site:apply_settings[#{self.id}] &"
-
-    #Thread.new {
-    #  Rake.application.invoke_task("site:apply_settings[#{@site.id}]")
-    #}.join
   end
 
   ###################################################
@@ -324,16 +318,7 @@ class Site < ApplicationRecord
         return
     end
 
-
     env = Rails.application.assets
-
-
-#    env = if Rails.application.config.assets.is_a?(Sprockets::Index)
-#            Rails.application.config.assets.instance_variable_get('@environment')
-#          else
-#            Rails.application.config.assets
-#          end
-
 
     body = ActionView::Base.new(
       env.paths).render({
@@ -390,5 +375,4 @@ class Site < ApplicationRecord
       self.errors['context_sites'] << 'You must select at least one context when editing a site'
     end
   end
-
 end
