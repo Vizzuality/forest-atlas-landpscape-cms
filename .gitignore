@@ -60,3 +60,6 @@ package-lock.json
 /node_modules
 yarn-debug.log*
 .yarn-integrity
+
+# Test docs
+coverage
