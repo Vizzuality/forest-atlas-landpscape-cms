@@ -63,3 +63,8 @@ yarn-debug.log*
 
 # Test docs
 coverage
+
+# IDE
+.generators
+.idea/
+.rakeTasks
